@@ -1,0 +1,18 @@
+[package]
+name = "cursorsort"
+version = "0.1.0"
+edition = "2021"
+homepage = "https://github.com/h5law/cursorsort"
+authors = [ "Harry Law (h5law) <dev@h5law.com>" ]
+description = "A QuickSort implementation with a cursor based partitioner and pivot selector"
+license-file = "LICENSE"
+readme = "README.md"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+bench = false
+
+[dependencies]
