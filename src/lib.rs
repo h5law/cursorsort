@@ -294,4 +294,13 @@ mod tests {
         let sorted_string = String::from_utf8(bytes).unwrap();
         assert_eq!(sorted_string, "abbccddee");
     }
+
+    #[test]
+    fn test_string_with_whitespace() {
+        let string = String::from("hello world");
+        let mut bytes: Vec<u8> = string.bytes().collect();
+        cursorsort_vec(&mut bytes);
+        let sorted_string = String::from_utf8(bytes).unwrap();
+        assert_eq!(sorted_string, " dehllloorw");
+    }
 }
