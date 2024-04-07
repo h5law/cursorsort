@@ -19,15 +19,15 @@ The algorithm essentially works as follows:
 
 1. If the element at the first cursor is greater than the element at the second
    cursor **and** the first cursor is smaller than the second or vice versa
-   a. The first element is smaller but the first cursor is bigger
+   a. The first element is smaller but the first cursor is larger
 
 1. Assuming step 3 is true Swap the elements at the first and last cursor and
    the cursors themselves, otherwise do nothing.
 
-1. If the first counter is less than the second counter incremenet it, otherwise
+1. If the first counter is less than the second counter increment it, otherwise
    decrement it.
 
-1. This correctly places a pivot element and from the cursors (now euqual) we
+1. This correctly places a pivot element and from the cursors (now equal) we
    recursively call the function on the left and right halves of the array.
 
 ## Installation
@@ -36,4 +36,39 @@ To use this algorithm in your project, run the following command:
 
 ```sh
 cargo add cursorsort
+```
+
+## Usage
+
+Any type implementing the `PartialOrd` and `Copy` traits can be used, with
+either the `cursorsort` or `cursorsort_vec` functions for arrays/slices and
+`std::vec::Vec` respectively. If something can be converted into a `Vec` it will
+be able to be sorted (provided the trait requirements are met).
+
+```rust
+use cursorsort::*;
+
+fn main() {
+    // For arrays:
+
+    let mut array = [5, 3, 2, 4, 1];
+    cursorsort(&mut array);
+    println!("Sorted array: {:?}", array); // [ 1, 2, 3, 4, 5 ]
+
+    // For Vecs:
+
+    let mut vector = vec![5, 3, 2, 4, 1];
+    cursorsort_vec(&mut vector);
+    println!("Sorted vector: {:?}", vector); // [ 1, 2, 3, 4, 5 ]
+
+    // For Strings:
+
+    // Convert a String to a Vec<u8>
+    let mut bytes = String::from("hello world").into_bytes();
+    // Sort the vector in place
+    cursorsort_vec(&mut bytes);
+    // Convert the sorted Vec<u8> back into a String
+    let sorted_string = String::from_utf8(bytes).expect("Invalid UTF-8");
+    println!("Sorted string: {:?}", sorted_string); // " dehllloorw"
+}
 ```
