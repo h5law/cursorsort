@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-use std::cmp::Ordering;
+use core::cmp::Ordering;
 
 /// cursorsort sorts in place an array of any type that implements the
 /// `PartialOrd` and `Copy` traits. It does so by using a modified quicksort
