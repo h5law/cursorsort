@@ -7,7 +7,8 @@ loop swapping elements that are either greater than the two indexes the cursors
 point to and the first cursor is less than the second or vice versa.
 
 This sorting algorithm works on any type implementing the `PartialOrd` and `Copy`
-traits - the test cases cover arrays of integers, letters and words.
+traits - the test cases cover `array`s and `Vec`tors of integers, letters and words,
+as well as `String`s.
 
 ## Overview
 
@@ -41,32 +42,34 @@ cargo add cursorsort
 ## Usage
 
 Any type implementing the `PartialOrd` and `Copy` traits can be used, with
-either the `cursorsort` or `cursorsort_vec` functions for arrays/slices and
-`std::vec::Vec` respectively. If something can be converted into a `Vec` it will
-be able to be sorted (provided the trait requirements are met).
+the `cursorsort` function for arrays/slices and vectors. It operates on them in
+place and requires no `std` library to function.
+
+If something can be converted into a `Vec` it will be able to be sorted
+(provided the trait requirements are met).
 
 ```rust
-use cursorsort::*;
+use cursorsort::cursorsort;
 
 fn main() {
     // For arrays:
 
     let mut array = [5, 3, 2, 4, 1];
-    cursorsort(&mut array);
+    cursorsort(&mut array, false);
     println!("Sorted array: {:?}", array); // [ 1, 2, 3, 4, 5 ]
 
     // For Vecs:
 
-    let mut vector = vec![5, 3, 2, 4, 1];
-    cursorsort_vec(&mut vector);
-    println!("Sorted vector: {:?}", vector); // [ 1, 2, 3, 4, 5 ]
+    let mut vector = vec![1, 2, 3, 4, 5];
+    cursorsort(&mut vector, true);
+    println!("Sorted vector: {:?}", vector); // [ 5, 4, 3, 2, 1 ]
 
     // For Strings:
 
     // Convert a String to a Vec<u8>
     let mut bytes = String::from("hello world").into_bytes();
     // Sort the vector in place
-    cursorsort_vec(&mut bytes);
+    cursorsort(&mut bytes, false);
     // Convert the sorted Vec<u8> back into a String
     let sorted_string = String::from_utf8(bytes).expect("Invalid UTF-8");
     println!("Sorted string: {:?}", sorted_string); // " dehllloorw"
