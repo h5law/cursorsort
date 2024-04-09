@@ -6,9 +6,12 @@ choosing the initial and last elements of the array as its cursors and then in a
 loop swapping elements that are either greater than the two indexes the cursors
 point to and the first cursor is less than the second or vice versa.
 
-This sorting algorithm works on any type implementing the `PartialOrd` and `Copy`
-traits - the test cases cover `array`s and `Vec`tors of integers, letters and words,
+This sorting algorithm works on any type implementing the `PartialOrd` trait
+and the test cases cover `array`s and `Vec`tors of integers, letters and words,
 as well as `String`s.
+
+Depending on the `descending` argument passed to the function it will either
+sort in ascending or descending order.
 
 ## Overview
 

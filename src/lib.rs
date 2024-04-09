@@ -3,15 +3,16 @@
 use core::cmp::Ordering;
 
 /// cursorsort sorts in place an array of any type that implements the
-/// `PartialOrd` and `Copy` traits. It does so by using a modified quicksort
-/// algorithm that uses cursor based partitioning and pivot selection.
+/// `PartialOrd` trait. It does so by using a modified quicksort algorithm
+/// that uses cursor based partitioning and pivot selection.
+///
 /// It can sort in either ascending or descending order, depending on the
 /// `descending` argument passed to the function.
 ///
 /// This function works on arrays, slices, and vectors of any type satisfying
 /// the trait requirement. If a type can be turned into a vector like a String
 /// it will also be able to sort that.
-pub fn cursorsort<T: PartialOrd + Copy>(arr: &mut [T], descending: bool) {
+pub fn cursorsort<T: PartialOrd>(arr: &mut [T], descending: bool) {
     // If the array is empty or of length 1, return it as is.
     if arr.len() <= 1 {
         return;
