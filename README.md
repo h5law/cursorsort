@@ -44,9 +44,10 @@ cargo add cursorsort
 
 ## Usage
 
-Any type implementing the `PartialOrd` and `Copy` traits can be used, with
-the `cursorsort` function for arrays/slices and vectors. It operates on them in
-place and requires no `std` library to function.
+Any type implementing the `PartialOrd` traits can be used, with the `cursorsort`
+function for arrays/slices and vectors. It operates on them in place and
+requires only the `core::cmp::PartialOrd` as a dependency, making it `no_std`
+compatible.
 
 If something can be converted into a `Vec` it will be able to be sorted
 (provided the trait requirements are met).
