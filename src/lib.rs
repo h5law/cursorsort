@@ -26,47 +26,22 @@ pub fn cursorsort<T: PartialOrd>(arr: &mut [T], descending: bool) {
     // the pivot.
     while cur1 != cur2 {
         // Compare the cursors and the indexed elements and swap them if they
-        // are not in the correct place.
-        let mut swap = false;
-        if !descending {
-            // If the descending argument is false, sort ascending.
-            match PartialOrd::partial_cmp(&arr[cur1], &arr[cur2]) {
-                Some(Ordering::Greater) => {
-                    if cur1 < cur2 {
-                        swap = true
-                    }
-                }
-                Some(Ordering::Less) => {
-                    if cur1 > cur2 {
-                        swap = true
-                    }
-                }
-                _ => {}
-            };
-        } else {
-            // If the descending argument is true, sort descending.
-            match PartialOrd::partial_cmp(&arr[cur1], &arr[cur2]) {
-                Some(Ordering::Greater) => {
-                    if cur1 > cur2 {
-                        swap = true
-                    }
-                }
-                Some(Ordering::Less) => {
-                    if cur1 < cur2 {
-                        swap = true
-                    }
-                }
-                _ => {}
-            };
-        }
-
-        // Swap the elements at the cursors and the cursors themselves.
-        if swap {
+        // are not in the correct place, according to the descending argument.
+        if arr[cur1]
+            .partial_cmp(&arr[cur2])
+            .map(|ord| match ord {
+                Ordering::Greater => (cur1 < cur2 && !descending) || (cur1 > cur2 && descending),
+                Ordering::Less => (cur1 > cur2 && !descending) || (cur1 < cur2 && descending),
+                _ => false,
+            })
+            .unwrap()
+        {
+            // Swap the elements at the cursors and the cursors themselves.
             arr.swap(cur1, cur2);
             (cur1, cur2) = (cur2, cur1);
         }
 
-        // Incremement or decrement counter one based on its position.
+        // Increment or decrement counter one based on its position.
         if cur1 < cur2 {
             cur1 += 1;
         } else {
@@ -74,8 +49,8 @@ pub fn cursorsort<T: PartialOrd>(arr: &mut [T], descending: bool) {
         }
     }
 
-    // Recursively call cursorsort on the subarrays using the correctly placed
-    // pivot element freom the while loop.
+    // Recursively call cursorsort on the sub-arrays using the correctly placed
+    // pivot element from the while loop.
     cursorsort(&mut arr[..cur1], descending);
     cursorsort(&mut arr[cur1 + 1..], descending);
 }
